@@ -104,6 +104,6 @@ class UploadNotesForm(FlaskForm):
     class_name=StringField("Class Name", validators=[InputRequired()])
     file = FileField('File', validators=[
         FileRequired(), 
-        FileAllowed(['jpg', 'png', 'pdf'], 'Notes Only!')
+        FileAllowed(['pdf'], 'PDFs Only!')
     ])
     submit_pic = SubmitField('Submit File')
