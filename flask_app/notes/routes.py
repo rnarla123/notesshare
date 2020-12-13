@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from flask_login import current_user
 
-from ..forms import NotesReviewForm, SearchForm
+from ..forms import NotesReviewForm, SearchForm, UserSearchForm
 from ..models import User, Review, Notes
 from ..utils import current_time, get_b64_img
 
@@ -15,6 +15,7 @@ notes = Blueprint('notes', __name__, static_folder='static', template_folder='te
 @notes.route("/", methods=["GET", "POST"])
 def index():
     form = SearchForm()
+    user_search_form = UserSearchForm()
 
     users = User.objects()
     notes = Notes.objects()
@@ -54,8 +55,10 @@ def index():
 
     if form.validate_on_submit():
         return redirect(url_for("notes.query_results", query=form.search_query.data))
+    if user_search_form.validate_on_submit():
+        return redirect(url_for("notes.user_detail", username=user_search_form.username.data))
 
-    return render_template("index.html", form=form, plot=figdata_png.decode('utf8'))
+    return render_template("index.html", form=form, plot=figdata_png.decode('utf8'), form1=user_search_form)
 
 
 @notes.route("/search-results/<query>", methods=["GET"])

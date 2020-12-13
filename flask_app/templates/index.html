@@ -15,7 +15,7 @@
             {% endwith %}
 
             {{ form.csrf_token }}
-            {{ form.search_query(class="form-control", placeholder="Search") }}
+            {{ form.search_query(class="form-control", placeholder="Search Class") }}
 
             {% if form.search_query.errors %}
             <div class="alert alert-warning" role="alert">
@@ -26,6 +26,36 @@
             {% endif %}
             <span class="float-right">
                 {{ form.submit(class="btn btn-outline-success") }}
+            </span>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <form action="/" class="d-flex justify-content-start" method="POST">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-info">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {{ form1.csrf_token }}
+            {{ form1.username(class="form-control", placeholder="Username") }}
+
+            {% if form1.username.errors %}
+            <div class="alert alert-warning" role="alert">
+                {% for error in form1.username.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <span class="float-right">
+                {{ form1.submit1(class="btn btn-outline-success") }}
             </span>
         </form>
     </div>

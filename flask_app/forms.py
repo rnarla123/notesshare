@@ -26,6 +26,18 @@ class SearchForm(FlaskForm):
     submit = SubmitField("Search")
 
 
+class UserSearchForm(FlaskForm):
+    username = StringField(
+        "Username", validators=[InputRequired(), Length(min=1, max=40)]
+    )
+    submit1 = SubmitField("Find User")
+
+    def validate_username(self, username):
+        user = User.objects(username=username.data).first()
+        if user is None:
+            raise ValidationError("Username does not exist")
+
+
 class NotesReviewForm(FlaskForm):
     text = TextAreaField(
         "Comment", validators=[InputRequired(), Length(min=5, max=500)]
