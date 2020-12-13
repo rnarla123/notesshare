@@ -1,0 +1,98 @@
+{% extends "header.html" %}
+{% block content %}
+
+{% if error_msg %}
+<b>{{ error_msg }}</b>
+{% endif %}
+
+{% if notes %}
+
+{# Display card for the movie details #}
+<div class="row">
+  <div class="col">
+    <div class="card text-center">
+      <div class="card-header">
+        <div class='float-left'>
+          <b>Title:</b> {{ notes.title }}
+        </div> 
+        <div class='float-right'>
+          <b>Date:</b> {{ notes.date }}
+        </div> 
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><b>Class:</b> {{ notes.class_name }}</li>
+          <li class="list-group-item"><b>Written by:</b> {{ notes.notetaker.username }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<iframe class="col-md-12 h-75 d-inline-block" src="data:application/pdf;base64,{{pic_string}}" frameborder="0"></iframe>
+
+{# Reviews #}
+<div class="row">
+  <div class="col-md-12">
+    <h1> Reviews <small class="float-right">{{ reviews|length }} reviews</small></h1>
+    <ul class="media-list">
+      {% for review in reviews %}
+      <li class="media review-item">
+        <div class="media-body">
+          <span class="float-right">
+            <small>{{ review.date }}</small>
+          </span>
+          <a href="{{ url_for('notes.user_detail', username=review.commenter.username) }}">
+            <strong>@{{ review.commenter.username }}</strong>
+          </a>
+          <p></p>
+          <span>
+            {{ review.content }}
+          </span>
+          <span class="float-right">
+            <strong>Rating: {{ review.rating }}/5</strong>
+          </span>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% if current_user.is_authenticated %}
+{# Movie review submission form #}
+<div class="row">
+  <div class="col">
+    <form method="POST" action="">
+      {{ form.csrf_token }}
+      <div class="form-group">
+        {{ form.text.label }}
+        {{ form.text(class="form-control") }}
+
+        {% if form.text.errors %}
+        <div class="alert alert-warning" role="alert">
+          {% for error in form.text.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        {{ form.rating.label }}
+        {{ form.rating(class="form-control") }}
+
+        {% if form.rating.errors %}
+        <div class="alert alert-warning" role="alert">
+          {% for error in form.rating.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+      {{ form.submit() }}
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endif %}
+{% endblock content %}

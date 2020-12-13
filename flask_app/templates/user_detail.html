@@ -1,0 +1,55 @@
+{% extends "header.html" %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h3>{{ username }}'s Activity</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <h4> Notes <small class="float-right">{{ notes.count() }} notes</small></h4>
+        <ul class="border-bottom">
+            {% for note in notes %}
+            <li class="media border-top">
+                <div class="media-body">
+                    <span class="float-right">
+                        <small>{{ note.date }}</small>
+                    </span>
+                    <strong>
+                        Class: <a href="{{ url_for('notes.notes_detail', notes_id=note.get_id()) }}">
+                            {{ note.class_name }}
+                        </a>
+                    </strong>
+                    <p>
+                        {{ note.title }}
+                    </p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <h4> Reviews <small class="float-right">{{ reviews.count() }} reviews</small></h4>
+        <ul class="border-bottom">
+            {% for review in reviews %}
+            <li class="media border-top">
+                <div class="media-body">
+                    <span class="float-right">
+                        <small>{{ review.date }}</small>
+                    </span>
+                    <strong>Title: <a href="{{ url_for('notes.notes_detail', notes_id=review.notes_id) }}">
+                            {{ review.notes_title }}
+                        </a>
+                    </strong>
+                    <p></p>
+                    <span>
+                        {{ review.content }}
+                    </span>
+                    <span class="float-right">
+                        <strong>{{ review.rating }}/5</strong>
+                    </span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

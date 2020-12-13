@@ -1,0 +1,12 @@
+.card-body > img {
+    max-width: 100%;
+}
+
+.comment-pic {
+    max-width: 64px;
+}
+
+.token {
+    max-width: 800;
+    word-wrap: break-word;
+}
