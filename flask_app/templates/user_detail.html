@@ -1,5 +1,8 @@
 {% extends "header.html" %}
 {% block content %}
+
+{%if user%}
+
 <div class="row">
     <div class="col">
         <h3>{{ username }}'s Activity</h3>
@@ -52,4 +55,5 @@
         </ul>
     </div>
 </div>
+{%endif%}
 {% endblock %}

@@ -112,7 +112,7 @@ def user_detail(username):
     reviews = Review.objects(commenter=user)
     notes = Notes.objects(notetaker=user)
 
-    return render_template("user_detail.html", username=username, reviews=reviews, notes=notes)
+    return render_template("user_detail.html", username=username, reviews=reviews, notes=notes, user=user)
 
 @notes.route("/description")
 def description():
