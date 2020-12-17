@@ -30,7 +30,7 @@ def index():
     lst = sorted(lst, key=lambda x: x[1])
     
     size = len(lst)
-    contributions = lst[:5] if size > 4 else lst[:size]
+    contributions = lst[:-5] if size > 4 else lst[:size]
     xdata = [i[0].username for i in contributions]
     ydata = [i[1] for i in contributions]
 
